@@ -28,6 +28,7 @@ const pintarCarrito = () => {
                 <p>cantidad ${libro.cantidad}</p>
                 <span class = "sumar"> ➕ </span>
                 <p>total ${libro.cantidad * libro.precio}</p>
+                <span class = "libro-delete"> ❌ </span>
         `;
         contenedorCarrito.appendChild(carritoContent);
 
@@ -52,14 +53,19 @@ const pintarCarrito = () => {
             pintarCarrito();
         })
 
+        let eliminar = carritoContent.querySelector(".libro-delete")
 
-        let elimnarlibro = document.createElement("span");
+        eliminar.addEventListener("click", () => {
+            eliminarProducto(libro.nombre)
+        })
+
+        /*let elimnarlibro = document.createElement("span");
         elimnarlibro.innerText = "❌";
         elimnarlibro.className = "libro-delete";
 
         carritoContent.appendChild(elimnarlibro);
 
-        elimnarlibro.addEventListener("click", eliminarLibro);
+        elimnarlibro.addEventListener("click", eliminarProducto);*/
     });
 
     const total = carrito.reduce((acc, el) => acc + el.precio * el.cantidad, 0);
@@ -75,8 +81,8 @@ const pintarCarrito = () => {
 
 carritoCompras.addEventListener("click", pintarCarrito);
 
-const eliminarLibro = () => {
-    const foundName = carrito.find((element) => toString(element.nombre));
+const eliminarProducto = (nombre) => {
+    const foundName = carrito.find((element) => element.nombre === nombre);
     carrito = carrito.filter((carritoName) => {
         return carritoName !== foundName;
 
